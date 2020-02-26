@@ -310,6 +310,8 @@ public class JdbcSourceTask extends SourceTask {
 
   @Override
   public void stop() throws ConnectException {
+    closeResources(); // According to observation, resources are not properly closed before reaching here.
+                      // Hard-coded temporary solution
     log.info("Stopping JDBC source task");
     running.set(false);
     // All resources are closed at the end of 'poll()' when no longer running or
